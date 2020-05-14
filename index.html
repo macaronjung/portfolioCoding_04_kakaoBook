@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>KAKAO Book Search</title>
+</head>
+<body>
+  
+  <h1>카카오 책 검색 서비스</h1>
+  <p></p>
+
+  <script src="https://code.jquery.com/jquery-3.5.1.js" integrity="sha256-QWo7LDvxbWT2tbbQ97B53yJnYU3WhH/C8ycbRAkjPDc=" crossorigin="anonymous">
+  </script>
+
+  <script>
+    /* JSON 데이터를 data 라는 변수에 저장되어있을시 data(->key).name(->value) 로 호출가능 */
+
+    /* 요청에 대한 정보 전송 -> 전송 방식, 전송 주소, 전송 데이터 */
+    $.ajax({
+      method: "GET",
+      url: "https://dapi.kakao.com/v3/search/book?target=title",
+      /* JSON 형식 -> { 이름: "카카오"} */
+      data: { query: "생활코딩! HTML+CSS+자바스크립트" },
+      headers: {Authorization: "KakaoAK 9d942166552eb5e5279d612a0161af70"}
+    }) /* 완성 후 Data Saved: [object Object] 메세지가 출력되야함 */
+    /* 응답을 가지고 처리하는 코드 */
+    .done(function( msg ) {
+      /* 콘솔창 우클릭 -> store -> 임시변수 temp1로 값 접근 가능 */
+      console.log(msg.documents[0].title);
+      console.log(msg.documents[0].thumbnail);
+      $( "p" ).append( "<strong>" + msg.documents[0].title + "</strong>" );
+      $( "p" ).append( "<img src = '" + msg.documents[0].thumbnail + "'/>" );
+    });
+  </script>
+</body>
+</html>
